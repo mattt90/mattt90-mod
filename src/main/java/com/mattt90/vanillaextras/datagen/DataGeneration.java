@@ -12,6 +12,7 @@ public class DataGeneration {
 
         generator.addProvider(event.includeClient(), new VeBlockStates(packOutput, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new VeItemModels(packOutput, event.getExistingFileHelper()));
+        generator.addProvider(event.includeClient(), new VeLanguageProvider(packOutput, "en_us"));
 
         generator.addProvider(event.includeServer(), new VeRecipes(packOutput));
     }
