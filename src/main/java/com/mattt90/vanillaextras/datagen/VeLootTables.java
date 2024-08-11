@@ -26,7 +26,7 @@ public class VeLootTables extends VanillaBlockLoot {
 
     @Override
     protected void generate() {
-        createStandardTable(Registration.TEST_BLOCK.get(), Registration.TEST_BLOCK_ENTITY.get());
+        createStandardTable(Registration.TEST_BLOCK.get(), Registration.TEST_BLOCK_ENTITY.get(), 2);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class VeLootTables extends VanillaBlockLoot {
                 .collect(Collectors.toList());
     }
 
-    private void createStandardTable(Block block, BlockEntityType<?> type, String... tags) {
+    private void createStandardTable(Block block, BlockEntityType<?> type, int rolls, String... tags) {
         LootPoolSingletonContainer.Builder<?> lti = LootItem.lootTableItem(block);
         lti.apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY));
         for (String tag : tags) {
@@ -46,7 +46,7 @@ public class VeLootTables extends VanillaBlockLoot {
         lti.apply(SetContainerContents.setContents(type).withEntry(DynamicLoot.dynamicEntry(new ResourceLocation("minecraft", "contents"))));
 
         LootPool.Builder builder = LootPool.lootPool()
-                .setRolls(ConstantValue.exactly(1))
+                .setRolls(ConstantValue.exactly(rolls))
                 .add(lti);
         add(block, LootTable.lootTable().withPool(builder));
     }
