@@ -17,8 +17,8 @@ public class TestBlock extends Block implements EntityBlock {
 
     public TestBlock() {
         super(Properties.of()
-                .strength(1.0F)
-                .sound(SoundType.GRASS));
+            .strength(1.0F)
+            .sound(SoundType.GRASS));
     }
 
     @Override
