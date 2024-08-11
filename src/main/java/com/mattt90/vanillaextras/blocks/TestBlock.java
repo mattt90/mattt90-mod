@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class TestBlock extends Block implements EntityBlock {
 
-    private static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D);
+    private static final VoxelShape AABB = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
     public TestBlock() {
         super(Properties.of()
