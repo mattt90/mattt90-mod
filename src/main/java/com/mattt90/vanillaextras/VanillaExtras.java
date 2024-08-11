@@ -1,6 +1,5 @@
 package com.mattt90.vanillaextras;
 
-import com.mattt90.vanillaextras.compat.TopCompatibility;
 import com.mattt90.vanillaextras.datagen.DataGeneration;
 import com.mattt90.vanillaextras.network.Channel;
 import com.mojang.logging.LogUtils;
@@ -13,7 +12,7 @@ import org.slf4j.Logger;
 @Mod(VanillaExtras.MODID)
 public class VanillaExtras {
 
-    public static final String MODID = "mattt90vanillaextras";
+    public static final String MODID = "vanillaextras";
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public VanillaExtras() {
@@ -26,6 +25,5 @@ public class VanillaExtras {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         Channel.register();
-        TopCompatibility.register();
     }
 }

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "vanillaextras:block/test_block_bottom",
+    "particle": "vanillaextras:block/test_block_side",
+    "side": "vanillaextras:block/test_block_side",
+    "top": "vanillaextras:block/test_block_top"
+  }
+}

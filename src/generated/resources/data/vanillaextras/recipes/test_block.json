@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "vanillaextras",
+  "key": {
+    "d": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "pattern": [
+    "ddd",
+    "ddd",
+    "ddd"
+  ],
+  "result": {
+    "count": 4,
+    "item": "vanillaextras:test_block"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "vanillaextras:block/test_block"
+    }
+  }
+}
