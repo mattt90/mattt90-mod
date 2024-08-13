@@ -63,9 +63,6 @@ public class TestBlock extends Block implements EntityBlock {
     }
 
     private void addOneEntity(Level level, BlockPos bPos) {
-        // TODO: make random or summoning block below
-        Chicken chicken = new Chicken(EntityType.CHICKEN, level);
-        chicken.moveTo(bPos.getX(), bPos.getY() + 1, bPos.getZ(), 0, 0);
         BlockState bState = level.getBlockState(new BlockPos(bPos.getX(), bPos.getY() - 1, bPos.getZ()));
         BlockPos summonBlockPos = new BlockPos(bPos.getX(), bPos.getY() + 1, bPos.getZ());
         // TODO: config
