@@ -8,6 +8,7 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DirtPathBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -65,21 +66,37 @@ public class TestBlock extends Block implements EntityBlock {
         // TODO: make random or summoning block below
         Chicken chicken = new Chicken(EntityType.CHICKEN, level);
         chicken.moveTo(bPos.getX(), bPos.getY() + 1, bPos.getZ(), 0, 0);
-        level.addFreshEntity(chicken); 
+        BlockState bState = level.getBlockState(new BlockPos(bPos.getX(), bPos.getY() - 1, bPos.getZ()));
+        BlockPos summonBlockPos = new BlockPos(bPos.getX(), bPos.getY() + 1, bPos.getZ());
+        // TODO: config
+
+        switch (bState.toString()) {
+            case "Block{minecraft:dirt}":
+                summonEntity(level, summonBlockPos, "minecraft:chicken");
+                break;
+            case "Block{minecraft:cobblestone}":
+                summonEntity(level, summonBlockPos, "minecraft:cow");
+                break;
+            case "Block{minecraft:air}":
+                // TODO: breeze
+                summonEntity(level, summonBlockPos, "minecraft:pig");
+                break;
+            case "Block{minecraft:water}[level=0]":
+                summonEntity(level, summonBlockPos, "minecraft:cod");
+                break;
+            default:
+                break;
+        }
     }
 
-    /*
-    private void addOneRandomEntity(Level l, BlockPos bPos) {
+    private void summonEntity(Level l, BlockPos bPos, String mobId) {
         CompoundTag compoundtag = new CompoundTag();
-        compoundtag.putString("id", "minecraft:chicken");
+        compoundtag.putString("id", mobId);
             
         Entity entity = EntityType.loadEntityRecursive(compoundtag, l, (e) -> {
-                e.moveTo(bPos.getX(), bPos.getY(), bPos.getZ() + 1, 0, 0);;
+                e.moveTo(bPos.getX(), bPos.getY(), bPos.getZ(), 0, 0);;
                 return e;
         });
         l.addFreshEntity(entity);
     }
-    */
-
-    
 }
