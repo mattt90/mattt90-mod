@@ -18,6 +18,7 @@ public class DataGeneration {
         PackOutput packOutput = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
+        generator.addProvider(event.includeClient(), new TestBlockProvider(packOutput, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new VeBlockStates(packOutput, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new VeItemModels(packOutput, event.getExistingFileHelper()));
         generator.addProvider(event.includeClient(), new VeLanguageProvider(packOutput, "en_us"));

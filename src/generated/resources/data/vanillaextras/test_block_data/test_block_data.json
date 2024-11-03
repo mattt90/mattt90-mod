@@ -1,0 +1,21 @@
+{
+  "data": [
+    {
+      "block": "minecraft:dirt",
+      "mob": "minecraft:chicken"
+    },
+    {
+      "block": "minecraft:cobblestone",
+      "mob": "minecraft:cow"
+    },
+    {
+      "block": "minecraft:air",
+      "mob": "minecraft:pig"
+    },
+    {
+      "block": "minecraft:water",
+      "mob": "minecraft:cod"
+    }
+  ],
+  "spawnRate": 0.995
+}

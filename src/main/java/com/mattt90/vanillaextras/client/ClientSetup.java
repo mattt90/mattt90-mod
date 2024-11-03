@@ -28,6 +28,5 @@ public class ClientSetup {
     @SubscribeEvent
     public static void registerBlockColor(RegisterColorHandlersEvent.Block event) {
     }
-
 }
 

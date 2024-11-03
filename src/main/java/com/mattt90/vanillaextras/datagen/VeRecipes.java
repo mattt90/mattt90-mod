@@ -11,6 +11,8 @@ import net.minecraft.world.item.Items;
 
 import java.util.function.Consumer;
 
+import javax.annotation.Nonnull;
+
 import com.mattt90.vanillaextras.Registration;
 
 public class VeRecipes extends RecipeProvider {
@@ -20,7 +22,7 @@ public class VeRecipes extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
+    protected void buildRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Registration.TEST_BLOCK.get(), 4)
                 .pattern("ddd")
                 .pattern("ddd")

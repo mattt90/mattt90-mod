@@ -4,11 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DirtPathBlock;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -20,11 +18,14 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.struct.InjectorGroupInfo.Map;
 
 import com.mattt90.vanillaextras.VanillaExtras;
+import com.mattt90.vanillaextras.datagen.TestBlockData;
+import com.mattt90.vanillaextras.datagen.TestBlockSpawnData;
 
-import java.util.stream.Collectors;
+import java.util.Optional;
+
+import javax.annotation.Nonnull;
 
 public class TestBlock extends Block implements EntityBlock {
 
@@ -37,53 +38,48 @@ public class TestBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter level, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
         return AABB;
     }
 
     @Nullable
     @Override
-    public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    public BlockEntity newBlockEntity(@Nonnull BlockPos blockPos, @Nonnull BlockState blockState) {
         return new TestBlockEntity(blockPos, blockState);
     }
     
     @Nullable
     @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
         if (level.isClientSide) {
             return null;
         } else {
             return (lvl, pos, st, be) -> {
-                if (be instanceof TestBlockEntity t && Math.random() > 0.995) {
-                    BlockPos bPos = t.getBlockPos();
-                    addOneEntity(level, bPos);
+
+                if (be instanceof TestBlockEntity t) {
+                    TestBlockData testBlockData = VanillaExtras.TEST_BLOCK_MANAGER.getData();
+                    if (Math.random() > testBlockData.spawnRate()) {
+                        BlockPos bPos = t.getBlockPos();
+                        addOneEntity(level, bPos);
+                    }
                 }
             };
         }
     }
 
+    
     private void addOneEntity(Level level, BlockPos bPos) {
         BlockState bState = level.getBlockState(new BlockPos(bPos.getX(), bPos.getY() - 1, bPos.getZ()));
-        BlockPos summonBlockPos = new BlockPos(bPos.getX(), bPos.getY() + 1, bPos.getZ());
-        // TODO: config
+        Block block = bState.getBlock();
+        var blockName = ForgeRegistries.BLOCKS.getKey(block);
+        Optional<TestBlockSpawnData> testBlockSpawnData = VanillaExtras.TEST_BLOCK_MANAGER.getSpawnData(blockName);
 
-        switch (bState.toString()) {
-            case "Block{minecraft:dirt}":
-                summonEntity(level, summonBlockPos, "minecraft:chicken");
-                break;
-            case "Block{minecraft:cobblestone}":
-                summonEntity(level, summonBlockPos, "minecraft:cow");
-                break;
-            case "Block{minecraft:air}":
-                // TODO: breeze
-                summonEntity(level, summonBlockPos, "minecraft:pig");
-                break;
-            case "Block{minecraft:water}[level=0]":
-                summonEntity(level, summonBlockPos, "minecraft:cod");
-                break;
-            default:
-                break;
+        if (!testBlockSpawnData.isPresent()) {
+            return;
         }
+
+        BlockPos summonBlockPos = new BlockPos(bPos.getX(), bPos.getY() + 1, bPos.getZ());
+        summonEntity(level, summonBlockPos, testBlockSpawnData.get().mob());
     }
 
     private void summonEntity(Level l, BlockPos bPos, String mobId) {

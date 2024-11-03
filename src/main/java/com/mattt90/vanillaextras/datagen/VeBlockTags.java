@@ -12,6 +12,8 @@ import com.mattt90.vanillaextras.VanillaExtras;
 
 import java.util.concurrent.CompletableFuture;
 
+import javax.annotation.Nonnull;
+
 public class VeBlockTags extends BlockTagsProvider {
 
     public VeBlockTags(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
@@ -19,7 +21,7 @@ public class VeBlockTags extends BlockTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(@Nonnull HolderLookup.Provider provider) {
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(Registration.TEST_BLOCK.get());
      }
 }
